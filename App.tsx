@@ -1,11 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { ChallengeState, DayProgress, Task } from './types';
-import { INITIAL_TASKS, TOTAL_DAYS, WATER_GOAL_OZ } from './constants';
-import Layout from './components/Layout';
-import ProgressBar from './components/ProgressBar';
-import WaterTracker from './components/WaterTracker';
-import { getCoachFeedback } from './services/geminiService';
+import { ChallengeState, DayProgress, Task } from './types.ts';
+import { INITIAL_TASKS, TOTAL_DAYS, WATER_GOAL_OZ } from './constants.ts';
+import Layout from './components/Layout.tsx';
+import ProgressBar from './components/ProgressBar.tsx';
+import WaterTracker from './components/WaterTracker.tsx';
+import { getCoachFeedback } from './services/geminiService.ts';
 
 const App: React.FC = () => {
   const [state, setState] = useState<ChallengeState>(() => {
@@ -84,7 +84,6 @@ const App: React.FC = () => {
       const newTasks = day.tasks.map(t => t.id === taskId ? { ...t, completed: !t.completed } : t);
       const update: Partial<DayProgress> = { tasks: newTasks };
       
-      // If manually toggling water, update the ounces to match the goal or reset
       if (taskId === 'water') {
         const task = newTasks.find(t => t.id === 'water');
         update.waterOunces = task?.completed ? WATER_GOAL_OZ : 0;
@@ -265,7 +264,6 @@ const App: React.FC = () => {
         </button>
       )}
 
-      {/* Hydration Slay Moved Above Checklist */}
       <WaterTracker currentOz={day.waterOunces} onUpdate={(oz) => updateWater(oz, day.dayNumber)} />
 
       <div className="space-y-4">

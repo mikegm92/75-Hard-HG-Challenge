@@ -1,6 +1,6 @@
 
 import { GoogleGenAI } from "@google/genai";
-import { DayProgress, ChatMessage } from "../types";
+import { DayProgress, ChatMessage } from "../types.ts";
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY || "" });
 
@@ -43,7 +43,7 @@ export const getCoachFeedback = async (
       ],
       config: {
         systemInstruction: prompt,
-        temperature: 0.9, // Slightly higher for more creative sass
+        temperature: 0.9,
       }
     });
 
