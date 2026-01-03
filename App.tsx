@@ -80,9 +80,18 @@ const App: React.FC = () => {
   };
 
   const toggleTask = (taskId: string, dayNumber: number) => {
-    updateDayState(dayNumber, (day) => ({
-      tasks: day.tasks.map(t => t.id === taskId ? { ...t, completed: !t.completed } : t)
-    }));
+    updateDayState(dayNumber, (day) => {
+      const newTasks = day.tasks.map(t => t.id === taskId ? { ...t, completed: !t.completed } : t);
+      const update: Partial<DayProgress> = { tasks: newTasks };
+      
+      // If manually toggling water, update the ounces to match the goal or reset
+      if (taskId === 'water') {
+        const task = newTasks.find(t => t.id === 'water');
+        update.waterOunces = task?.completed ? WATER_GOAL_OZ : 0;
+      }
+      
+      return update;
+    });
   };
 
   const updateWater = (oz: number, dayNumber: number) => {
@@ -265,7 +274,7 @@ const App: React.FC = () => {
           {day.tasks.map(task => (
             <div key={task.id} className="flex flex-col gap-2">
               <div 
-                onClick={() => task.id !== 'photo' && task.id !== 'water' && toggleTask(task.id, day.dayNumber)}
+                onClick={() => task.id !== 'photo' && toggleTask(task.id, day.dayNumber)}
                 className={`group relative flex items-center p-5 rounded-[1.5rem] border transition-all duration-300 cursor-pointer ${
                   task.completed 
                     ? 'bg-pink-500/5 border-pink-500/30 opacity-70' 
