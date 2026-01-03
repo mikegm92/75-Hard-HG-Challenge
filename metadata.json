@@ -1,0 +1,7 @@
+{
+  "name": "75-Day Hot Girl Challenge",
+  "description": "A comprehensive tracking application for the 75-Day Hot Girl Challenge, featuring task management, water intake tracking, photo logging, and an AI-powered motivational coach.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
